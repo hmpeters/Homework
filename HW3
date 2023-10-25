@@ -1,0 +1,47 @@
+%%%%%%%
+% HW 3
+% Hailey Peters
+% 10/18/2023
+%%%%%%%
+%% Input parameters matrix (test numbers)
+a= [0.1; 0.5; 1; 2];
+b= [0.5; 1; 2; 3];
+c= [2; 4; 6; 8];
+
+matrix= [a b c];
+
+% Add a domain vector (x) the domain should range from 0-20
+x= 0:20;
+
+% Calculate the sum of gaussians
+result = multGauss(matrix, x);
+
+% Plot the results:
+plot(x, result);
+xlabel('X');
+ylabel('Sum of Gaussians');
+title('Sum of Multiple Gaussians');
+
+
+% multGauss Function:
+function result = multGauss(matrix, x)
+% Checking to make sure the input matrix has three columns
+   if size(matrix, 2) ~= 3
+    disp('Input parameter matrix must have three columns.')
+   end
+
+% Looping through each row of the matrix to compute and add the Gaussian
+% profiles
+   for i = 1:size(matrix, 1)
+% Extracting the parameters for the i-th Gaussian
+       y1 = matrix(i, 1); % Amplitude
+       y2 = matrix(i, 2); % Width
+       y3 = matrix(i, 3); % Location
+  result = y1+ y2+ y3;
+% Compute gaussian profiles using guassmf function
+gaussian_i = y1*gaussmf(x, [y2 y3]);
+% Add to the result
+result = result + gaussian_i;
+   end
+end
+
